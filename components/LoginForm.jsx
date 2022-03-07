@@ -8,8 +8,31 @@ import {
   Button,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { useState } from "react";
 
-const LoginForm = () => {
+const LoginForm = (props) => {
+  const [userInput, setUserInput] = useState({});
+
+  const emailChangeHandler = (event) => {
+    setUserInput({
+      ...userInput,
+      email: event.target.value,
+    });
+  };
+  const passwordChangeHandler = (event) => {
+    setUserInput({
+      ...userInput,
+      password: event.target.value,
+    });
+  };
+
+  const handlerSubmit = (evt) => {
+    evt.preventDefault();
+    const newUserData = {
+      userInput,
+    };
+    props.LoginFormSubmitData(newUserData);
+  };
   return (
     <>
       <Box h="100px" />
@@ -31,18 +54,28 @@ const LoginForm = () => {
               <FormControl isRequired>
                 <Box pb="20px">
                   <FormLabel htmlFor="email">Email</FormLabel>
-                  <Input id="email" placeholder="please enter email here" />
+                  <Input
+                    onChange={emailChangeHandler}
+                    id="email"
+                    placeholder="please enter email here"
+                  />
                 </Box>
                 <Box>
                   <FormLabel htmlFor="password">Password</FormLabel>
-                  <Input id="pword" placeholder="please enter password here" />
+                  <Input
+                    onChange={passwordChangeHandler}
+                    id="pword"
+                    placeholder="please enter password here"
+                  />
                 </Box>
               </FormControl>
             </Box>
             <Box w="340px" pt="10px">
               <Flex justifyContent="flex-end">
                 <Box>
-                  <Button colorScheme="blue">Login</Button>
+                  <Button colorScheme="blue" onClick={handlerSubmit}>
+                    Login
+                  </Button>
                 </Box>
                 <Box pl="5px">
                   <Link href="/" passHref>

@@ -3,7 +3,7 @@ import Users from "../../models/Register";
 
 dbConnect();
 
-const user = async (req, res) => {
+const Register = async (req, res) => {
   const { method } = req;
 
   switch (method) {
@@ -20,9 +20,9 @@ const user = async (req, res) => {
     case "POST":
       try {
         const user = await Users.create(req.body);
-        res.status(201).json({ success: true, data: user });
+        res.status(201).json({ success: true, data: user, res: 201 });
       } catch (error) {
-        res.status(400).json({ success: false });
+        res.status(401).json({ success: false, res: 401 });
       }
       break;
     default:
@@ -31,4 +31,4 @@ const user = async (req, res) => {
   }
 };
 
-export default user;
+export default Register;
